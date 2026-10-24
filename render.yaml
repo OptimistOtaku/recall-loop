@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: recall-loop-demo
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: RECALL_DEMO
+        value: "1"
+      - key: RECALL_DATA_DIR
+        value: /tmp/recall-data
+      - key: RECALL_BUDGET_USD
+        value: "0"
+    autoDeploy: false

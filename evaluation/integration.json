@@ -1,0 +1,13 @@
+{
+  "hook_context": "passed",
+  "mcp_transport": "passed",
+  "tools": [
+    "get_memory",
+    "record_feedback",
+    "search_memory"
+  ],
+  "project": "f795e2c5-cd12-428f-a51d-fdbc2cc4743c",
+  "dataset": "Synthetic integration fixture",
+  "live_codex_agent_behavior": "not tested",
+  "paid_extraction": "not tested"
+}

@@ -1,0 +1,13 @@
+{
+  "dataset": "Synthetic 500-node rendering fixture",
+  "browser": "Codex in-app browser on Windows",
+  "viewport": {"width": 1440, "height": 900},
+  "visible_nodes": 500,
+  "visible_connections": 1195,
+  "duration_ms": 5018,
+  "renderer_frames_per_second": 58,
+  "target_frames_per_second": 30,
+  "target_met_in_this_run": true,
+  "method": "Difference in Three.js WebGLRenderer.info.render.frame over a five-second foreground sample, observed through the application's benchmark UI.",
+  "limitations": "One device/browser run. Not a guarantee for other hardware, datasets, or WebGL implementations."
+}

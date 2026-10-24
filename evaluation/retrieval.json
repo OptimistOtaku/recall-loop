@@ -1,0 +1,140 @@
+{
+  "dataset": "Synthetic Atlas fixtures; not evidence of real coding productivity",
+  "mode": "hybrid",
+  "hit_at_5": 10,
+  "cases": 10,
+  "results": [
+    {
+      "query": "The first screen thinks I am signed out after login",
+      "expected": "Persist the session before redirecting",
+      "returned": [
+        "Persist the session before redirecting",
+        "Open question: refresh in another tab",
+        "Run the callback regression test",
+        "Invalidate refresh tokens on logout",
+        "Validate environment variables on startup"
+      ],
+      "hit_at_5": true,
+      "latency_ms": 37.51
+    },
+    {
+      "query": "How must logout handle refresh tokens?",
+      "expected": "Invalidate refresh tokens on logout",
+      "returned": [
+        "Invalidate refresh tokens on logout",
+        "Open question: refresh in another tab",
+        "Keep customer records out of logs",
+        "Validate environment variables on startup"
+      ],
+      "hit_at_5": true,
+      "latency_ms": 13.72
+    },
+    {
+      "query": "What regression checks authentication callback ordering?",
+      "expected": "Run the callback regression test",
+      "returned": [
+        "Run the callback regression test",
+        "Replay the double-click checkout case",
+        "Persist the session before redirecting",
+        "Check keyboard navigation in dialogs",
+        "Keep migrations in timestamp order"
+      ],
+      "hit_at_5": true,
+      "latency_ms": 14.57
+    },
+    {
+      "query": "Should I edit a migration which has already run?",
+      "expected": "Keep migrations in timestamp order",
+      "returned": [
+        "Keep migrations in timestamp order",
+        "Run the callback regression test",
+        "Use optimistic updates with rollback",
+        "Cache keys must include the workspace",
+        "Profile labels before changing the engine"
+      ],
+      "hit_at_5": true,
+      "latency_ms": 12.74
+    },
+    {
+      "query": "Prevent duplicate payments when a request is retried",
+      "expected": "Use idempotency keys for checkout",
+      "returned": [
+        "Use idempotency keys for checkout",
+        "Keep customer records out of logs",
+        "A passing build is not a passing checkout",
+        "Replay the double-click checkout case",
+        "Validate environment variables on startup"
+      ],
+      "hit_at_5": true,
+      "latency_ms": 12.47
+    },
+    {
+      "query": "Verify double clicking the checkout button",
+      "expected": "Replay the double-click checkout case",
+      "returned": [
+        "Replay the double-click checkout case",
+        "A passing build is not a passing checkout",
+        "Use idempotency keys for checkout",
+        "Check keyboard navigation in dialogs",
+        "Open question: refresh in another tab"
+      ],
+      "hit_at_5": true,
+      "latency_ms": 12.11
+    },
+    {
+      "query": "Can a green TypeScript build prove the payment workflow works?",
+      "expected": "A passing build is not a passing checkout",
+      "returned": [
+        "A passing build is not a passing checkout",
+        "Use idempotency keys for checkout",
+        "Replay the double-click checkout case",
+        "Validate environment variables on startup",
+        "Run the callback regression test"
+      ],
+      "hit_at_5": true,
+      "latency_ms": 16.14
+    },
+    {
+      "query": "Which customer details should appear in logging?",
+      "expected": "Keep customer records out of logs",
+      "returned": [
+        "Keep customer records out of logs",
+        "Cache keys must include the workspace",
+        "Persist the session before redirecting",
+        "Run the callback regression test",
+        "Validate environment variables on startup"
+      ],
+      "hit_at_5": true,
+      "latency_ms": 12.93
+    },
+    {
+      "query": "Data from the previous workspace remains in cache",
+      "expected": "Cache keys must include the workspace",
+      "returned": [
+        "Cache keys must include the workspace",
+        "Persist the session before redirecting",
+        "Use optimistic updates with rollback",
+        "Run the callback regression test"
+      ],
+      "hit_at_5": true,
+      "latency_ms": 12.6
+    },
+    {
+      "query": "How should missing environment variables be reported?",
+      "expected": "Validate environment variables on startup",
+      "returned": [
+        "Validate environment variables on startup",
+        "Cache keys must include the workspace",
+        "Keep customer records out of logs",
+        "Run the callback regression test",
+        "A passing build is not a passing checkout"
+      ],
+      "hit_at_5": true,
+      "latency_ms": 13.11
+    }
+  ],
+  "paired_real_coding_tasks": {
+    "status": "not_run",
+    "reason": "Requires fresh Codex sessions, an enabled integration, and controlled real task trials. No productivity improvement is claimed."
+  }
+}
