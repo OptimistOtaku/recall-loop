@@ -4,6 +4,10 @@
 
 An independent local-first application: Python/FastAPI, SQLite, Qdrant Edge, local FastEmbed embeddings, Codex hooks/MCP, and an editable Three.js knowledge graph.
 
+Public demo: https://recall-loop-demo.onrender.com · Source: https://github.com/OptimistOtaku/recall-loop
+
+The hosted demo uses synthetic, visitor-isolated data. Free hosting can sleep and resets temporary edits after restarts.
+
 ## Implemented
 
 - Create, inspect, correct, supersede, delete, and undo evidence-backed memories.
@@ -132,3 +136,4 @@ Render was not connected during implementation, so no public deployment is claim
 - Automatic capture requires the local installation. Do not expose your real local data directory publicly; keep the local service on loopback.
 
 See docs/DEMO_SCRIPT.md, docs/CONTEST_CHECKLIST.md, and evaluation/retrieval.json.
+

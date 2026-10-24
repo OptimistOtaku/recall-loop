@@ -1,0 +1,18 @@
+{
+  "url": "https://recall-loop-demo.onrender.com",
+  "health": {
+    "status": "ok",
+    "index": "qdrant-edge",
+    "embeddings": "ready",
+    "embedding_error": null,
+    "demo": true,
+    "extraction_enabled": false
+  },
+  "graph_nodes": 37,
+  "hybrid_search": "passed",
+  "relationship_create_and_undo": "passed",
+  "visitor_isolation": "passed",
+  "paid_extraction_disabled": "passed",
+  "deploy_id": "dep-dbeh90oae00c73d56q20",
+  "source_commit": "25c14149596f4a9fd7d6af50eda91afa31967b02"
+}
