@@ -37,3 +37,7 @@ Reports: evaluation/retrieval.json, evaluation/rendering.json, and evaluation/in
 - Memory selection clears stale evidence while loading another node. Connections name records outside the bounded snapshot and can navigate to their neighborhood.
 - Searchable keyboard-accessible node directory, 2D/3D view, labels, evidence/suggestion layers, freeze, zoom and focus controls. Project selection remains available on narrow screens and persists across reloads.
 - No paid automatic extraction, fresh native Codex run, Wispr recording, or paired productivity result is claimed. See evaluation/real-coding.json.
+
+The original frontend failure/pass terminal reports are included in evaluation/graph-regression-before.txt and evaluation/graph-regression-after.txt, with local paths redacted.
+
+Public Observatory deployment verified live at source commit 14d0056c8e0872b9238e2630881d6a28d1a7709c (deploy dep-dbibhcajnfac73dbnt3g). Public search, connection creation/undo, visitor isolation, and disabled paid extraction passed.

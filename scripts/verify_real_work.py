@@ -39,6 +39,7 @@ def main():
             evidence=[]
             for name,quote in [('before','not ok 1 - a canonical unpin releases all three simulation constraints'),('after','ok 1 - a canonical unpin releases all three simulation constraints')]:
                 path=ROOT/f'../../work/graph-regression-{name}.txt'
+                if not path.exists():path=ROOT/f'evaluation/graph-regression-{name}.txt'
                 if not path.exists():raise RuntimeError('Preserved original before/after command logs are required to recreate this actual evidence.')
                 text=path.read_text(encoding='utf-8-sig');assert quote in text
                 event=c.post('/api/capture',json={'project':project,'session':session,'role':'tool','text':text,'source':'Actual node regression command output','event_id':f'actual-terminal-{name}'}).raise_for_status().json()['id']

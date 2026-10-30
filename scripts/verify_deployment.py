@@ -1,4 +1,4 @@
-import json
+import json,os
 from pathlib import Path
 import httpx
 url='https://recall-loop-demo.onrender.com'
@@ -21,6 +21,6 @@ with httpx.Client(base_url=url,timeout=60) as a, httpx.Client(base_url=url,timeo
     restored=a.get('/api/graph',params={'project':p}).raise_for_status().json()
     assert not any(e['id']==edge for e in restored['links'])
     assert a.post('/api/extract',json={'project':p,'session':'test'}).status_code==403
-    report={'url':url,'health':health,'graph_nodes':len(graph['nodes']),'hybrid_search':'passed','relationship_create_and_undo':'passed','visitor_isolation':'passed','paid_extraction_disabled':'passed','deploy_id':'dep-dbeh90oae00c73d56q20','source_commit':'25c14149596f4a9fd7d6af50eda91afa31967b02'}
+    report={'url':url,'health':health,'graph_nodes':len(graph['nodes']),'hybrid_search':'passed','relationship_create_and_undo':'passed','visitor_isolation':'passed','paid_extraction_disabled':'passed','deploy_id':os.getenv('RECALL_DEPLOY_ID'),'source_commit':os.getenv('RECALL_DEPLOY_COMMIT')}
     Path('evaluation/deployment.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(report,indent=2))

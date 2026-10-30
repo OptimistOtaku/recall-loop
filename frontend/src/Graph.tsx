@@ -13,7 +13,15 @@ const escape=(s:string)=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const hash=(s:string)=>{let n=2166136261;for(const c of s)n=Math.imul(n^c.charCodeAt(0),16777619);return (n>>>0)/4294967296;};
 function dispose(object:THREE.Object3D){object.traverse((child:any)=>{child.geometry?.dispose();for(const m of Array.isArray(child.material)?child.material:[child.material]){if(m?.map?.userData.owned)m.map.dispose();m?.dispose();}});}
 function glowTexture(){const c=document.createElement('canvas');c.width=c.height=128;const x=c.getContext('2d')!;const g=x.createRadialGradient(64,64,0,64,64,64);g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(.12,'rgba(255,255,255,.7)');g.addColorStop(.35,'rgba(255,255,255,.15)');g.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=g;x.fillRect(0,0,128,128);return new THREE.CanvasTexture(c);}
-function textSprite(text:string,color='#e6edff',size=42){const c=document.createElement('canvas');c.width=768;c.height=80;const x=c.getContext('2d')!;x.font='500 25px "DM Sans Variable",sans-serif';x.fillStyle='#060d1d';x.shadowBlur=8;x.shadowColor='#030817';x.fillText(text.length>48?text.slice(0,47)+'…':text,12,47);x.shadowBlur=0;x.fillStyle=color;x.fillText(text.length>48?text.slice(0,47)+'…':text,12,47);const texture=new THREE.CanvasTexture(c);texture.userData.owned=true;const s=new THREE.Sprite(new THREE.SpriteMaterial({map:texture,transparent:true,depthTest:false,depthWrite:false}));s.scale.set(size,size*80/768,1);s.renderOrder=10;return s;}
+function textSprite(text:string,color='#e6edff',size=52){
+ const c=document.createElement('canvas'),measure=c.getContext('2d')!;
+ const value=text.length>48?text.slice(0,47)+'…':text;
+ measure.font='500 24px "DM Sans Variable",sans-serif';c.width=Math.ceil(measure.measureText(value).width)+24;c.height=54;
+ const x=c.getContext('2d')!;x.font='500 24px "DM Sans Variable",sans-serif';x.shadowBlur=8;x.shadowColor='#020612';x.fillStyle=color;x.fillText(value,12,35);
+ const texture=new THREE.CanvasTexture(c);texture.userData.owned=true;
+ const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map:texture,transparent:true,depthTest:false,depthWrite:false,sizeAttenuation:false}));
+ const height=.048*Math.max(.85,size/52);sprite.scale.set(height*c.width/54,height,1);sprite.center.set(0,.5);sprite.renderOrder=10;return sprite;
+}
 
 export type GraphHandle={reset:()=>void;focus:(id:string)=>void;pin:(id:string,pinned:boolean)=>void;positions:()=>any[];benchmark:()=>Promise<{fps:number;nodes:number;links:number;durationMs:number}>};
 type Props={visible:boolean;data:GraphData;selected:string|null;highlight:string[];onNode:(node:Node)=>void;onLink:(link:Link)=>void;onPositions:(positions:any[])=>void;resetKey:number};
@@ -52,7 +60,7 @@ const Graph=forwardRef<GraphHandle,Props>(function Graph({visible,data,selected,
       const halo=new THREE.Sprite(new THREE.SpriteMaterial({map:glow,color,transparent:true,opacity:dim?.1:active?.8:.35,blending:THREE.AdditiveBlending,depthWrite:false}));halo.scale.setScalar(size*(active?11:7));group.add(halo);
       if(n.type==='session'||active){const ring=new THREE.Mesh(new THREE.TorusGeometry(size+(active?2.4:1.7),.1,5,60),new THREE.MeshBasicMaterial({color,transparent:true,opacity:active?.8:.4}));ring.rotation.x=.5;group.add(ring);}
       const show=state.labels==='all'||state.labels==='auto'&&(active||n.type==='session'&&nodes.current.size<=200||near&&state.highlight.indexOf(n.id)<10);
-      if(show&&state.labels!=='none'){const name=textSprite(n.label,dim?'#6b7894':active?'#ffffff':'#b9c8e8',active?62:52);name.position.set(22,size+6,0);group.add(name);}
+      if(show&&state.labels!=='none'){const name=textSprite(n.label,dim?'#6b7894':active?'#ffffff':'#b9c8e8',active?62:52);name.position.set(size+3,size+5,0);group.add(name);}
       meshes.current.set(n.id,group);return group;
     }).nodeThreeObjectExtend(false)
     .linkVisibility((l:Link)=>l.origin==='suggestion'?live.current.suggestions:live.current.evidence||l.origin==='user')
@@ -64,7 +72,7 @@ const Graph=forwardRef<GraphHandle,Props>(function Graph({visible,data,selected,
       const key=l.origin==='suggestion'?'suggestion':adjacent&&l.origin==='user'&&live.current.labels!=='none'?l.kind:'';
       const old=linkObjects.current.get(l.id);if(old?.userData.visualKey===key)return old;if(old){dispose(old);linkObjects.current.delete(l.id);}
       if(l.origin==='suggestion'){const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(),new THREE.Vector3()]),new THREE.LineDashedMaterial({color:'#6c7fba',dashSize:2,gapSize:3,transparent:true,opacity:.5}));line.userData.visualKey=key;linkObjects.current.set(l.id,line);return line;}
-      if(key){const sprite=textSprite(pretty(l.kind),relations[l.kind],32);sprite.userData.visualKey=key;linkObjects.current.set(l.id,sprite);return sprite;}return null;
+      if(key){const sprite=textSprite(pretty(l.kind),relations[l.kind],42);sprite.center.set(.5,.5);sprite.userData.visualKey=key;linkObjects.current.set(l.id,sprite);return sprite;}return null;
     }).linkPositionUpdate((object:THREE.Object3D,p:any,l:Link)=>{if(l.origin==='suggestion'){const line=object as THREE.Line;line.geometry.setFromPoints([new THREE.Vector3(p.start.x,p.start.y,p.start.z),new THREE.Vector3(p.end.x,p.end.y,p.end.z)]);line.computeLineDistances();return true;}return false;})
     .onNodeClick((n:Node)=>callbacks.current.onNode(n)).onNodeRightClick((n:Node)=>focusNode(n.id))
     .onNodeHover((n:Node|null)=>{setHover(n?.id||null);if(host.current)host.current.style.cursor=n?'pointer':'grab';})
