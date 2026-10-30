@@ -80,12 +80,14 @@ class MemoryService:
         if not body.strip() or not label.strip():
             raise ValueError("A lesson needs a title and body")
         evidence = evidence or []
+        source_roles = set()
         for item in evidence:
             rows = self.store.rows("SELECT * FROM events WHERE id=? AND project=?", (item["event_id"], project))
             if not rows or not item.get("quote") or item["quote"] not in rows[0]["text"]:
                 raise ValueError("Memory evidence must quote an event from this project")
             if session and rows[0]["session"] != session:
                 raise ValueError("Evidence must belong to the linked session")
+            source_roles.add(rows[0]["role"])
         if not evidence:
             # A direct manual assertion is an explicit source event, never fabricated observed evidence.
             event_id = uid()
@@ -93,10 +95,14 @@ class MemoryService:
                 db.execute("INSERT INTO events VALUES(?,?,?,?,?,?,?)",
                            (event_id, project, session or "manual", "user", redact(body), now(), "manual assertion"))
             evidence = [{"event_id": event_id, "quote": redact(body)}]
+        classification = "user_stated" if not source_roles or "user" in source_roles else "source_supported"
+        if source_roles == {"assistant"}:
+            tentative = True
+            classification = "inferred"
         with self.store.transaction() as db:
             self.store.snapshot(db, project, "Create memory")
             mid = self.store.put_node(db, project, "memory", redact(label), redact(body), kind,
-                                     {"evidence": evidence, "classification": "user_stated",
+                                     {"evidence": evidence, "classification": classification,
                                       "applicability": "", "revision": 1},
                                      status="tentative" if tentative else "active")
             if session:
@@ -116,7 +122,9 @@ class MemoryService:
                 record["evidence"].append({**source, "role": events[0]["role"],
                                            "source": events[0]["source"], "created": events[0]["created"]})
         record["relationships"] = self.store.rows(
-            "SELECT * FROM edges WHERE project=? AND (source=? OR target=?)", (project, node, node))
+            "SELECT e.*,s.label source_label,t.label target_label FROM edges e "
+            "JOIN nodes s ON s.id=e.source JOIN nodes t ON t.id=e.target "
+            "WHERE e.project=? AND (e.source=? OR e.target=?)", (project, node, node))
         return record
 
     def edit_memory(self, project, memory, changes):

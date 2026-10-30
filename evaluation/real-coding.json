@@ -1,0 +1,26 @@
+{
+  "dataset": "Actual RecallLoop repository changes, 30 October 2026 IST",
+  "project": "dc49995e-e68c-40a5-8f1a-d6ef900eecc5",
+  "source": "Actual user request and original before/after terminal output",
+  "before": {
+    "passing": 1,
+    "failing": 2
+  },
+  "after": {
+    "passing": 3,
+    "failing": 0
+  },
+  "backend_tests": 26,
+  "fresh_mcp_process_recall": "passed",
+  "fresh_hook_process_context": "passed",
+  "after_service_restart": "passed",
+  "retrieval_mode": "hybrid",
+  "evidence_inspection": "passed",
+  "raw_terminal_evidence": "Original failing and passing command output stored locally with exact quoted assertions",
+  "memory_creation": "Explicitly curated from real evidence; no paid automatic extraction",
+  "limitations": [
+    "Not a fresh native Codex agent session",
+    "No measured productivity improvement claimed",
+    "No genuine Wispr recording in this test"
+  ]
+}

@@ -283,3 +283,22 @@ def test_unknown_host_cannot_read_local_memory(tmp_path):
     app = create_app(tmp_path, embeddings=False)
     with TestClient(app, base_url="http://untrusted.test") as client:
         assert client.get("/api/projects").status_code == 400
+
+def test_explicit_source_roles_are_not_mislabeled_as_user_assertions(service):
+    tool = service.capture('p', 'real-outcome', 'tool', '3 passed, 0 failed', source='Actual terminal outcome')
+    memory = service.create_memory('p', 'Observed regression result', 'The regression command reported three passing checks.', 'procedure',
+                                   [{'event_id':tool,'quote':'3 passed, 0 failed'}], 'real-outcome')
+    assert memory['props']['classification'] == 'source_supported'
+    assistant = service.capture('p', 'uncertain-claim', 'assistant', 'I think the issue is fixed.')
+    guess = service.create_memory('p', 'Unverified assistant claim', 'The issue might be fixed.', 'question',
+                                  [{'event_id':assistant,'quote':'I think the issue is fixed.'}], 'uncertain-claim')
+    assert guess['status'] == 'tentative'
+    assert guess['props']['classification'] == 'inferred'
+
+def test_detail_names_connections_outside_the_visible_snapshot(service):
+    a=service.create_memory('p','Graph reconciliation','Keep live node identity during refresh.')
+    b=service.create_memory('p','Canonical pin constraints','Apply saved pins explicitly.')
+    service.relationship('p',a['id'],b['id'],'prerequisite_for')
+    edge=service.detail(a['id'],'p')['relationships'][0]
+    assert edge['source_label']=='Graph reconciliation'
+    assert edge['target_label']=='Canonical pin constraints'

@@ -7,13 +7,13 @@ These are implementation checks, not a claim of winning or a general productivit
 - Production React/TypeScript/Vite build.
 - Qdrant Edge 0.9.0 native Windows shard creation, indexing, querying, closing and reopening.
 - Local FastEmbed model download and offline hybrid retrieval.
-- Backend regression suite: 24 tests covering persistence, evidence, directed graph expansion and undo, project isolation, deletion/superseding, pinned layouts, capture checkpoints, privacy filtering, source validation, tentative assistant claims, budget guards, API failure handling, explicit public-origin support, and unrecognized-host rejection.
+- Backend regression suite: 26 tests covering persistence, evidence, directed graph expansion and undo, project isolation, deletion/superseding, pinned layouts, capture checkpoints, privacy filtering, source validation, tentative assistant claims, budget guards, API failure handling, explicit public-origin support, and unrecognized-host rejection.
 - Ten predefined synthetic retrieval cases: 10/10 expected lessons in the top five; median 13.02 ms, maximum 37.51 ms in this run.
 - Live local hook-context and MCP transport check using a synthetic source event. All three tools were advertised; search and evidence inspection completed.
 - Project-local setup in a disposable fixture: existing hooks preserved, backup created, launcher generated.
 - Browser memory creation, quoted source inspection, prerequisite connection, recall path, and undo.
 - Browser pin persistence across a full page reload.
-- Foreground rendering sample: 58 Three.js renderer frames/s, 500 nodes, 1,195 connections, 5,018 ms, 1440×900 in the Windows in-app browser.
+- Foreground rendering sample: 45 Three.js renderer frames/s, 500 nodes, 1,195 connections, 5,011 ms, 1440×960 in the Windows in-app browser.
 - Mobile breakpoint check: document content did not exceed the viewport width.
 
 ## Still requires the configured user environment
@@ -29,3 +29,11 @@ The deployment uses the exact RECALL_PUBLIC_ORIGIN or Render-provided RENDER_EXT
 
 Reports: evaluation/retrieval.json, evaluation/rendering.json, and evaluation/integration.json.
 
+
+## Observatory redesign — 30 October 2026 IST
+
+- Three frontend regressions pass. The original merge logic failed two of these checks; explicit canonical pin reconciliation fixes both.
+- The actual engineering workspace stores the user design request and real before/after terminal evidence. A fresh MCP process retrieves the lesson and inspects its evidence; a fresh hook process supplies it as context.
+- Memory selection clears stale evidence while loading another node. Connections name records outside the bounded snapshot and can navigate to their neighborhood.
+- Searchable keyboard-accessible node directory, 2D/3D view, labels, evidence/suggestion layers, freeze, zoom and focus controls. Project selection remains available on narrow screens and persists across reloads.
+- No paid automatic extraction, fresh native Codex run, Wispr recording, or paired productivity result is claimed. See evaluation/real-coding.json.

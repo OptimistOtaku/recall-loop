@@ -21,6 +21,16 @@ The hosted demo uses synthetic, visitor-isolated data. Free hosting can sleep an
 
 This is an MVP, not a claim of a competition win or a proven general productivity improvement.
 
+## Celestial Observatory
+
+The 3D workspace uses a dark celestial palette, luminous typed nodes, session constellations, and a decorative galaxy backdrop. Background stars are visual context, not memories. Positions do not imply semantic similarity.
+
+Use **Browse nodes** to search by title, filename, or content, then select a result to inspect and fly to it. Use **2D map** for planar navigation, **Smart labels** to reduce clutter, **Freeze layout** to stop physics, and the evidence/suggestion toggles to control detail. Typed user connections affect recall; dragging only pins layout. The inspector explains prerequisite direction.
+
+Actual repository testing reproduced and fixed a pin synchronization bug: two frontend assertions failed before the fix, and all three pass afterward. The lesson and terminal evidence are stored in the local **RecallLoop · real engineering** workspace. Fresh MCP and hook processes retrieve it. This is explicitly curated evidence, not a claim that paid extraction or a fresh native Codex session was verified.
+
+Run the frontend regression checks with Node.js 22.14+: `node --experimental-strip-types --test frontend/test/graph-model.test.mjs`.
+
 ## Run on Windows
 
 Prerequisites: Python 3.11 and Node.js 22+, or uv for Python management.

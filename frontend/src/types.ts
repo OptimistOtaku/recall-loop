@@ -4,7 +4,7 @@ export type Node = {
   position?: {x:number;y:number;z:number;pinned:boolean}; x?:number;y?:number;z?:number;
   fx?:number;fy?:number;fz?:number;
 };
-export type Link = {id:string;project:string;source:string|Node;target:string|Node;kind:string;origin:string;reason?:string};
+export type Link = {id:string;project:string;source:string|Node;target:string|Node;kind:string;origin:string;reason?:string;source_label?:string;target_label?:string};
 export type GraphData = {nodes:Node[];links:Link[];version:number;total:number;undo_count:number};
 export type SearchResult = {retrieval_id:string;results:(Node & {path?:{from:string;relationship:string};score:number})[];warnings:{message:string}[];mode:string};
 export const endpointId = (x:string|Node) => typeof x === 'string' ? x : x.id;

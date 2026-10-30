@@ -4,7 +4,7 @@ import zipfile
 
 root = Path(__file__).resolve().parent.parent
 destination = root.parent / "RecallLoop-source.zip"
-folders = ["recall_loop", "frontend/src", "frontend/dist", "tests", "scripts", "docs", "evaluation", "screenshots"]
+folders = ["recall_loop", "frontend/src", "frontend/test", "frontend/dist", "tests", "scripts", "docs", "evaluation", "screenshots"]
 files = ["README.md", "THIRD_PARTY_NOTICES.md", "pyproject.toml", "uv.lock", "requirements.lock",
          "Dockerfile", ".dockerignore", ".gitignore", "render.yaml", "Start-RecallLoop.ps1",
          "frontend/package.json", "frontend/package-lock.json", "frontend/tsconfig.json",
