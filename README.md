@@ -1,4 +1,4 @@
-# RecallLoop
+# bunch
 
 **Coding-agent memory you can inspect, connect, and carry into your next session.**
 
@@ -21,9 +21,9 @@ The hosted demo uses synthetic, visitor-isolated data. Free hosting can sleep an
 
 This is an MVP, not a claim of a competition win or a proven general productivity improvement.
 
-## Celestial Observatory
+## bunch · a full-canvas knowledge space
 
-The 3D workspace uses a dark celestial palette, luminous typed nodes, session constellations, and a decorative galaxy backdrop. Background stars are visual context, not memories. Positions do not imply semantic similarity.
+The 3D graph fills the viewport beneath transparent, collapsible workspace and evidence panels. Search, filters, directories, and dialogs share its galactic backdrop. The workspace uses a dark celestial palette, luminous typed nodes, session constellations, and a decorative galaxy backdrop. Background stars are visual context, not memories. Positions do not imply semantic similarity.
 
 Use **Browse nodes** to search by title, filename, or content, then select a result to inspect and fly to it. Use **2D map** for planar navigation, **Smart labels** to reduce clutter, **Freeze layout** to stop physics, and the evidence/suggestion toggles to control detail. Typed user connections affect recall; dragging only pins layout. The inspector explains prerequisite direction.
 
@@ -147,3 +147,5 @@ Render was not connected during implementation, so no public deployment is claim
 
 See docs/DEMO_SCRIPT.md, docs/CONTEST_CHECKLIST.md, and evaluation/retrieval.json.
 
+
+The product is now named **bunch**. Existing `recall-loop` commands, storage paths, environment variables, and hosting URLs are retained for compatibility with configured integrations.

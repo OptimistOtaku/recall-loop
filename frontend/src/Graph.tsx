@@ -13,6 +13,7 @@ const escape=(s:string)=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const hash=(s:string)=>{let n=2166136261;for(const c of s)n=Math.imul(n^c.charCodeAt(0),16777619);return (n>>>0)/4294967296;};
 function dispose(object:THREE.Object3D){object.traverse((child:any)=>{child.geometry?.dispose();for(const m of Array.isArray(child.material)?child.material:[child.material]){if(m?.map?.userData.owned)m.map.dispose();m?.dispose();}});}
 function glowTexture(){const c=document.createElement('canvas');c.width=c.height=128;const x=c.getContext('2d')!;const g=x.createRadialGradient(64,64,0,64,64,64);g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(.12,'rgba(255,255,255,.7)');g.addColorStop(.35,'rgba(255,255,255,.15)');g.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=g;x.fillRect(0,0,128,128);return new THREE.CanvasTexture(c);}
+const labelOcclusion=new WeakMap<THREE.WebGLRenderer,{frame:number;rects:DOMRect[]}>();
 function textSprite(text:string,color='#e6edff',size=52){
  const c=document.createElement('canvas'),measure=c.getContext('2d')!;
  const value=text.length>48?text.slice(0,47)+'…':text;
@@ -20,7 +21,21 @@ function textSprite(text:string,color='#e6edff',size=52){
  const x=c.getContext('2d')!;x.font='500 24px "DM Sans Variable",sans-serif';x.shadowBlur=8;x.shadowColor='#020612';x.fillStyle=color;x.fillText(value,12,35);
  const texture=new THREE.CanvasTexture(c);texture.userData.owned=true;
  const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map:texture,transparent:true,depthTest:false,depthWrite:false,sizeAttenuation:false}));
- const height=.048*Math.max(.85,size/52);sprite.scale.set(height*c.width/54,height,1);sprite.center.set(0,.5);sprite.renderOrder=10;return sprite;
+ sprite.center.set(0,.5);sprite.renderOrder=10;
+ const viewport=new THREE.Vector2(),world=new THREE.Vector3(),fontPixels=12*Math.max(.85,size/52);
+ sprite.onBeforeRender=(renderer,_scene,camera)=>{
+   renderer.getSize(viewport);const perspective=camera as THREE.PerspectiveCamera;
+   const height=fontPixels*(54/24)*2/(Math.max(1,viewport.y)*perspective.projectionMatrix.elements[5]);
+   sprite.scale.set(height*c.width/54,height,1);sprite.updateMatrixWorld();
+   let ui=labelOcclusion.get(renderer);
+   if(!ui||ui.frame!==renderer.info.render.frame){
+     const rects=Array.from(document.querySelectorAll<HTMLElement>('.bunch-shell .sidebar,.bunch-shell .inspector,.bunch-shell .node-navigator,.bunch-shell .canvas-toolbar,.bunch-shell .modal')).filter(e=>{const st=getComputedStyle(e);return st.visibility!=='hidden'&&st.display!=='none'&&Number(st.opacity)>.1;}).map(e=>e.getBoundingClientRect());
+     ui={frame:renderer.info.render.frame,rects};labelOcclusion.set(renderer,ui);
+   }
+   sprite.getWorldPosition(world).project(camera);const x=(world.x+1)*viewport.x/2,y=(1-world.y)*viewport.y/2;
+   const width=fontPixels*c.width/24,left=x-width*sprite.center.x,top=y-fontPixels;
+   (sprite.material as THREE.SpriteMaterial).opacity=ui.rects.some(r=>left<r.right&&left+width>r.left&&top<r.bottom&&top+fontPixels*2>r.top)?0:1;
+ };return sprite;
 }
 
 export type GraphHandle={reset:()=>void;focus:(id:string)=>void;pin:(id:string,pinned:boolean)=>void;positions:()=>any[];benchmark:()=>Promise<{fps:number;nodes:number;links:number;durationMs:number}>};

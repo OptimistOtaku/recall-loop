@@ -43,3 +43,7 @@ The original frontend failure/pass terminal reports are included in evaluation/g
 Public Observatory deployment verified live at source commit 14d0056c8e0872b9238e2630881d6a28d1a7709c (deploy dep-dbibhcajnfac73dbnt3g). Public search, connection creation/undo, visitor isolation, and disabled paid extraction passed.
 
 Final readable-label release verified live: ec255ea3389b19ba329823b69c3239161e9d068e, deploy dep-dbibl08n74is73avp54g. Foreground renderer check: 53 FPS at 500 nodes / 1,195 links, 1280×720, 5,009 ms.
+
+## bunch · immersive canvas and transparent panels
+
+The product is branded bunch. The graph fills the viewport behind transparent, collapsible workspace and memory panels. Search, filters, node directory, session/recall views, and dialogs use the shared galactic backdrop. Desktop (1440×900) and mobile (390×844) layouts, panel toggles, session navigation, and memory dialogs were checked. Labels keep a consistent screen size and avoid rendering through panel text. Existing memory and MCP retrieval were preserved. See evaluation/bunch-interface.json.

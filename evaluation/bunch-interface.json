@@ -1,0 +1,36 @@
+{
+  "product": "bunch",
+  "layout": "Viewport-filling Three.js galaxy with floating transparent panels",
+  "desktop": {
+    "viewport": [
+      1440,
+      900
+    ],
+    "graph_canvas": "full viewport",
+    "workspace_panel_background": "rgba(6,12,25,0.10)",
+    "inspector_background": "rgba(6,12,25,0.10)",
+    "collapsible_panels": "verified"
+  },
+  "mobile": {
+    "viewport": [
+      390,
+      844
+    ],
+    "document_width": 390,
+    "drawer_navigation": "verified",
+    "project_switcher": "verified"
+  },
+  "other_views": [
+    "Galactic session library",
+    "Galactic recall results",
+    "Transparent memory and connection dialogs",
+    "Transparent searchable node directory"
+  ],
+  "branding": [
+    "bunch wordmark",
+    "Browser title and description",
+    "API title",
+    "MCP server display name"
+  ],
+  "compatibility": "Existing databases, environment variables, command names, source repository and hosting URLs retained."
+}

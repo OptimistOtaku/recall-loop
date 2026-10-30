@@ -42,7 +42,7 @@ def create_app(directory=None, embeddings=True, demo=None):
         yield
         service.close()
 
-    app = FastAPI(title="RecallLoop", version="0.1.0", lifespan=lifespan)
+    app = FastAPI(title="bunch", version="0.1.0", lifespan=lifespan)
     app.state.service = service
 
     @app.exception_handler(ValueError)
