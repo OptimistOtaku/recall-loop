@@ -13,7 +13,7 @@ These are implementation checks, not a claim of winning or a general productivit
 - Project-local setup in a disposable fixture: existing hooks preserved, backup created, launcher generated.
 - Browser memory creation, quoted source inspection, prerequisite connection, recall path, and undo.
 - Browser pin persistence across a full page reload.
-- Foreground rendering sample: 45 Three.js renderer frames/s, 500 nodes, 1,195 connections, 5,011 ms, 1440×960 in the Windows in-app browser.
+- Foreground rendering sample: 53 Three.js renderer frames/s, 500 nodes, 1,195 connections, 5,009 ms, 1280×720 in the Windows in-app browser.
 - Mobile breakpoint check: document content did not exceed the viewport width.
 
 ## Still requires the configured user environment
@@ -41,3 +41,5 @@ Reports: evaluation/retrieval.json, evaluation/rendering.json, and evaluation/in
 The original frontend failure/pass terminal reports are included in evaluation/graph-regression-before.txt and evaluation/graph-regression-after.txt, with local paths redacted.
 
 Public Observatory deployment verified live at source commit 14d0056c8e0872b9238e2630881d6a28d1a7709c (deploy dep-dbibhcajnfac73dbnt3g). Public search, connection creation/undo, visitor isolation, and disabled paid extraction passed.
+
+Final readable-label release verified live: ec255ea3389b19ba329823b69c3239161e9d068e, deploy dep-dbibl08n74is73avp54g. Foreground renderer check: 53 FPS at 500 nodes / 1,195 links, 1280×720, 5,009 ms.
